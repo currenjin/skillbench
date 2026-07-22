@@ -1,0 +1,17 @@
+id: bugfix-05
+category: bugfix
+fixture: pallets/jinja
+commit: 1d55cddbb28e433779511f28f13a2d8c4ec45826
+prompt: 'Using tuple unpacking in a set statement targeting namespace attributes, e.g. {%
+  set ns.a, ns.b = ns.a + 1, ns.b + 1 %}, fails to compile the template and raises a TemplateSyntaxError,
+  while assigning a single namespace attribute works. Both attributes should be assigned their
+  respective values.
+
+
+  Find the root cause and fix it. Do not modify any existing tests.'
+timeout_minutes: 20
+install: editable
+grading:
+  type: private
+  path: tasks/bugfix-05
+  command: python3 -m pytest grading_tests -q

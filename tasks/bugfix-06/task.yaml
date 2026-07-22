@@ -1,0 +1,17 @@
+id: bugfix-06
+category: bugfix
+fixture: marshmallow-code/marshmallow
+commit: 070dde08bad456e743a0d2e1842c142a799a9568
+prompt: 'When a OneOf validator is constructed with more labels than choices, calling its
+  options() method yields phantom pairs with an empty-string choice for each surplus label
+  (e.g. ('''', ''three'')), instead of returning exactly one pair per choice. With zero choices
+  and any labels, options() still yields entries even though no valid choice exists.
+
+
+  Find the root cause and fix it. Do not modify any existing tests.'
+timeout_minutes: 20
+install: editable
+grading:
+  type: private
+  path: tasks/bugfix-06
+  command: python3 -m pytest grading_tests -q

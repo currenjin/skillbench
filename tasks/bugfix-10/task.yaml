@@ -1,0 +1,18 @@
+id: bugfix-10
+category: bugfix
+fixture: john-kurkowski/tldextract
+commit: 86c82c3a9e3e9a2980a39ce8b77e1ad0bdebcc12
+prompt: 'The disk cache''s generic run-and-cache helper stores every result under a hardcoded
+  "urls" namespace instead of the caller-supplied namespace, so cached results for non-URL
+  namespaces are written to the wrong location and never found on subsequent lookups. The
+  wrapped function is therefore re-executed on every call even with identical arguments, defeating
+  the cache (e.g. the public suffix list computation was never actually cached).
+
+
+  Find the root cause and fix it. Do not modify any existing tests.'
+timeout_minutes: 20
+install: editable
+grading:
+  type: private
+  path: tasks/bugfix-10
+  command: python3 -m pytest grading_tests -q

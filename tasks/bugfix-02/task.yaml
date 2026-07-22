@@ -1,0 +1,16 @@
+id: bugfix-02
+category: bugfix
+fixture: tqdm/tqdm
+commit: 3757d0d13ec86d73a838b55fc35ef89bc42a3461
+prompt: 'Calling tqdm.write() crashes with AttributeError ("''NoneType'' object has no attribute
+  ''write''") when sys.stdout is None, e.g. in GUI/pythonw or embedded environments with no
+  console attached. Expected behavior is that the call is silently a no-op instead of raising.
+
+
+  Find the root cause and fix it. Do not modify any existing tests.'
+timeout_minutes: 20
+install: editable
+grading:
+  type: private
+  path: tasks/bugfix-02
+  command: python3 -m pytest grading_tests -q

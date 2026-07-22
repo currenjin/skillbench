@@ -1,0 +1,17 @@
+id: bugfix-14
+category: bugfix
+fixture: py-pdf/pypdf
+commit: d0b135a2fb3740ae80739f361f5d263403142e41
+prompt: 'Inserting a new entry into the first position of a PDF tree structure (such as an
+  outline/bookmark tree) raises KeyError("/Next") when the freshly created child dictionary
+  does not yet contain a /Next key. Insertion should succeed and link the new child before
+  the existing first child.
+
+
+  Find the root cause and fix it. Do not modify any existing tests.'
+timeout_minutes: 20
+install: editable
+grading:
+  type: private
+  path: tasks/bugfix-14
+  command: python3 -m pytest grading_tests -q

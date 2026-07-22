@@ -1,0 +1,18 @@
+id: bugfix-04
+category: bugfix
+fixture: pallets/jinja
+commit: fbc3a696c729d177340cc089531de7e2e5b6f065
+prompt: 'A template that first reads a variable passed in as a render parameter and then assigns
+  that same variable name with {% set %} inside every branch of an if/elif/else block fails
+  to render, raising an UndefinedError for the initial read, even though the variable was
+  provided to render(). The parameter''s original value should be visible before the assignments
+  occur.
+
+
+  Find the root cause and fix it. Do not modify any existing tests.'
+timeout_minutes: 20
+install: editable
+grading:
+  type: private
+  path: tasks/bugfix-04
+  command: python3 -m pytest grading_tests -q

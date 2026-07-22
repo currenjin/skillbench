@@ -1,0 +1,16 @@
+id: bugfix-13
+category: bugfix
+fixture: seperman/deepdiff
+commit: edded17926eb774ff7360a6a29bc6712de812836
+prompt: 'In the colored (and colored-compact) diff view, when every item of a list is removed
+  so that the new list is empty, the rendered output shows just "[]" instead of displaying
+  the removed items highlighted as deletions. The removals are silently invisible in the output.
+
+
+  Find the root cause and fix it. Do not modify any existing tests.'
+timeout_minutes: 20
+install: editable
+grading:
+  type: private
+  path: tasks/bugfix-13
+  command: python3 -m pytest grading_tests -q

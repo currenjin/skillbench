@@ -22,7 +22,7 @@ for each skill in skills.yaml (+ the baseline with NO skill):
 
 ## Fairness rules
 
-1. **Pinned model.** One model + version per season, stated on the leaderboard. Mid-season model releases get a separate "regression check" run before adoption.
+1. **Pinned model, pinned Python.** One model + version per season, stated on the leaderboard (season 1: `claude-opus-4-8`, CPython 3.11). Mid-season model releases get a separate "regression check" run before adoption.
 2. **Hidden tests.** Task fixtures are public; the grading test suites live in a private fixture repo so skills can't overfit. Suites are published one season after retirement.
 3. **Medians of 3.** Single runs lie. We report the median and flag any skill whose runs disagree (variance note on the leaderboard).
 4. **Baseline first.** The stock agent (no skill) runs every task, every week, before anything else. All "vs baseline" deltas are same-week, never historical.

@@ -1,0 +1,19 @@
+id: bugfix-18
+category: bugfix
+fixture: dateutil/dateutil
+commit: 66db2fa96de509ffe23b4b4507c6473356c6d90e
+prompt: 'When ISO date parsing fails on a string with trailing unknown components (e.g. parsing
+  ''2014-0423'' as a date), the ValueError message displays the input with a spurious bytestring
+  prefix, e.g. "String contains unknown ISO components: b''2014-0423''", even though the caller
+  passed a normal str. The error text should show the input as a plain string.
+
+
+  Find the root cause and fix it. Do not modify any existing tests.'
+timeout_minutes: 20
+install: editable
+grading:
+  type: private
+  path: tasks/bugfix-18
+  command: python3 -m pytest grading_tests -q
+extra_deps:
+- six

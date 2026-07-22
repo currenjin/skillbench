@@ -1,0 +1,17 @@
+id: bugfix-08
+category: bugfix
+fixture: jd/tenacity
+commit: 8779333a4759e56427b5d7ba23cacd3fe6054d61
+prompt: 'When TryAgain is raised from inside an except block (or explicitly chained with "raise
+  ... from exc") to drive a manual retry, a Retrying controller configured with reraise=True
+  raises the opaque TryAgain sentinel after attempts are exhausted, instead of surfacing the
+  underlying exception that actually caused the retry.
+
+
+  Find the root cause and fix it. Do not modify any existing tests.'
+timeout_minutes: 20
+install: editable
+grading:
+  type: private
+  path: tasks/bugfix-08
+  command: python3 -m pytest grading_tests -q

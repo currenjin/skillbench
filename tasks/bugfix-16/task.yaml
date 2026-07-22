@@ -1,0 +1,17 @@
+id: bugfix-16
+category: bugfix
+fixture: more-itertools/more-itertools
+commit: 18225d856665bfc3bfdfcdbfa585290f92645daf
+prompt: 'Calling sample() with the counts argument and strict=True, requesting a sample size
+  larger than the counted population, silently returns an undersized sample instead of raising
+  ValueError. The same strict check works correctly for unweighted and weighted sampling,
+  so only the counted variant misbehaves.
+
+
+  Find the root cause and fix it. Do not modify any existing tests.'
+timeout_minutes: 20
+install: editable
+grading:
+  type: private
+  path: tasks/bugfix-16
+  command: python3 -m pytest grading_tests -q

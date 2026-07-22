@@ -1,0 +1,17 @@
+id: bugfix-07
+category: bugfix
+fixture: marshmallow-code/marshmallow
+commit: 213ee3a020e24fb26ead3a2285ba0402c90080ce
+prompt: 'A schema with a Constant field whose constant value is None rejects loading input
+  where that key is explicitly null, raising a validation error "Field may not be null", even
+  though the field is defined to always produce None. Loading with the key absent or with
+  a non-null value works and returns None.
+
+
+  Find the root cause and fix it. Do not modify any existing tests.'
+timeout_minutes: 20
+install: editable
+grading:
+  type: private
+  path: tasks/bugfix-07
+  command: python3 -m pytest grading_tests -q

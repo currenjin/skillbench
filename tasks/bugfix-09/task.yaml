@@ -1,0 +1,17 @@
+id: bugfix-09
+category: bugfix
+fixture: jd/tenacity
+commit: 868c60b80cd84273bf15a8b3f5c2026776728e5f
+prompt: 'Constructing a wait_chain with no strategies succeeds silently, and the misconfiguration
+  only surfaces later when the retry loop first computes a wait time, failing with an opaque
+  "IndexError: tuple index out of range" far from the construction site. Construction should
+  instead fail immediately with a clear ValueError.
+
+
+  Find the root cause and fix it. Do not modify any existing tests.'
+timeout_minutes: 20
+install: editable
+grading:
+  type: private
+  path: tasks/bugfix-09
+  command: python3 -m pytest grading_tests -q

@@ -1,0 +1,19 @@
+id: bugfix-19
+category: bugfix
+fixture: dateutil/dateutil
+commit: ed4b9beec6df813c7d4fdbfb6a60bd84dc07226b
+prompt: 'The ISO 8601 parser silently accepts time strings that use the colon separator inconsistently
+  instead of rejecting them: for example ''20120425T01:2000'' parses to a datetime and the
+  time string ''14:3015'' parses to a time, when both should raise ValueError as invalid ISO
+  formats.
+
+
+  Find the root cause and fix it. Do not modify any existing tests.'
+timeout_minutes: 20
+install: editable
+grading:
+  type: private
+  path: tasks/bugfix-19
+  command: python3 -m pytest grading_tests -q
+extra_deps:
+- six

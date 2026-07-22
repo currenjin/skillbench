@@ -1,0 +1,17 @@
+id: bugfix-12
+category: bugfix
+fixture: seperman/deepdiff
+commit: 8676729bc70b5a08787581ec9b67bfbbff762dbf
+prompt: 'Hashing or diffing objects of classes that define __slots__ fails when some slots
+  were never assigned a value: DeepHash marks the whole object as "unprocessed" instead of
+  producing a hash (an AttributeError is hit internally while reading slot values). This also
+  breaks DeepDiff comparisons of such objects, including subclasses that inherit slots.
+
+
+  Find the root cause and fix it. Do not modify any existing tests.'
+timeout_minutes: 20
+install: editable
+grading:
+  type: private
+  path: tasks/bugfix-12
+  command: python3 -m pytest grading_tests -q

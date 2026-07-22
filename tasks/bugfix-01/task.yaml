@@ -1,0 +1,17 @@
+id: bugfix-01
+category: bugfix
+fixture: tqdm/tqdm
+commit: 9aff6090b6fa98c88a2dbff8bd9e2a68d9a99c1b
+prompt: 'When a fixed width is requested via ncols (or dynamic_ncols) but the bar format has
+  no {bar} placeholder (e.g. bar_format="{desc}"), or when a bar has no total, the rendered
+  meter line is not trimmed to the requested width. Lines longer than the terminal width overflow
+  and wrap, producing garbled multi-line progress output instead of a single trimmed line.
+
+
+  Find the root cause and fix it. Do not modify any existing tests.'
+timeout_minutes: 20
+install: editable
+grading:
+  type: private
+  path: tasks/bugfix-01
+  command: python3 -m pytest grading_tests -q

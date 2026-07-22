@@ -1,0 +1,17 @@
+id: bugfix-03
+category: bugfix
+fixture: pallets/click
+commit: d9ff13369ac78d9acff693faa79f26badd566ab3
+prompt: 'In the --help usage synopsis, an optional or variadic argument of a Choice type (and
+  other types with bracketed metavars such as DateTime) is rendered with doubled brackets,
+  e.g. "Usage: cli [OPTIONS] [[foo|bar|baz]]" instead of "Usage: cli [OPTIONS] [foo|bar|baz]",
+  because the optionality brackets are added around a metavar that is already bracketed.
+
+
+  Find the root cause and fix it. Do not modify any existing tests.'
+timeout_minutes: 20
+install: editable
+grading:
+  type: private
+  path: tasks/bugfix-03
+  command: python3 -m pytest grading_tests -q

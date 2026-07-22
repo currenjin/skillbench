@@ -1,0 +1,17 @@
+id: bugfix-17
+category: bugfix
+fixture: more-itertools/more-itertools
+commit: 55fcdd8013baff9d2f5b3ab890904a0964fb61df
+prompt: 'exactly_n() crashes with ValueError ("Indices for islice() must be None or an integer...")
+  when given a negative n less than -1, e.g. exactly_n([], -10) or exactly_n([True], -10),
+  instead of returning False. exactly_n(iterable, -1) already returns False, so behavior is
+  inconsistent across negative inputs.
+
+
+  Find the root cause and fix it. Do not modify any existing tests.'
+timeout_minutes: 20
+install: editable
+grading:
+  type: private
+  path: tasks/bugfix-17
+  command: python3 -m pytest grading_tests -q

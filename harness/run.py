@@ -17,6 +17,7 @@ skill gets exactly the same sandbox.
 """
 import argparse
 import json
+import os
 import shutil
 import subprocess
 import sys
@@ -123,9 +124,28 @@ def install_skill(entry, fixture):
     shutil.copytree(skill_dir, dest)
 
 
+def make_env(task, workdir, fixture):
+    """Per-run venv: pytest + (optionally) the fixture installed editable."""
+    venv_dir = workdir / "venv"
+    subprocess.run([sys.executable, "-m", "venv", str(venv_dir)], check=True)
+    py = venv_dir / "bin" / "python"
+    subprocess.run([py, "-m", "pip", "install", "-q", "pytest",
+                    *task.get("extra_deps", [])], check=True)
+    if task.get("install") == "editable":
+        # fixtures ship without .git, so scm-based version plugins
+        # (setuptools-scm, hatch-vcs) need a pretend version
+        env = {**os.environ, "SETUPTOOLS_SCM_PRETEND_VERSION": "0.0.0"}
+        subprocess.run([py, "-m", "pip", "install", "-q", "-e", str(fixture)],
+                       check=True, timeout=120, env=env)
+    return py
+
+
 def run_agent(task, fixture, model, permission_mode):
+    # web tools are blocked: season fixtures come from real OSS history, and the
+    # published fix must not be one WebSearch away
     cmd = ["claude", "-p", task["prompt"], "--output-format", "json",
-           "--model", model, "--permission-mode", permission_mode]
+           "--model", model, "--permission-mode", permission_mode,
+           "--disallowedTools", "WebFetch,WebSearch"]
     start = time.monotonic()
     try:
         proc = subprocess.run(cmd, cwd=fixture, capture_output=True, text=True,
@@ -151,7 +171,7 @@ def run_agent(task, fixture, model, permission_mode):
 FIXTURES_REPO = "currenjin/skillbench-fixtures"
 
 
-def grade(task, fixture):
+def grade(task, fixture, py=None):
     g = task["grading"]
     if g["type"] == "local":
         src = task["_dir"] / g["path"]
@@ -166,7 +186,14 @@ def grade(task, fixture):
     shutil.copytree(src, fixture / "grading_tests")
     cmd = g["command"].split()
     if cmd[0] in ("python", "python3"):
-        cmd[0] = sys.executable  # grade with the harness venv, not system python
+        # grade with the per-run venv (fixture installed), else the harness venv
+        cmd[0] = str(py) if py else sys.executable
+    if "pytest" in cmd:
+        # neutral config: never inherit the fixture's addopts/plugins
+        # (e.g. tqdm requires --asyncio-mode, pypdf requires --disable-socket)
+        ini = fixture / "grading_tests" / "_neutral.ini"
+        ini.write_text("[pytest]\n")
+        cmd += ["-c", str(ini)]
     proc = subprocess.run(cmd, cwd=fixture, capture_output=True,
                           text=True, timeout=600)
     return {"solved": proc.returncode == 0,
@@ -181,9 +208,10 @@ def bench(entry, task, runs, week, model, permission_mode):
         with tempfile.TemporaryDirectory(prefix="skillbench-") as tmp:
             workdir = Path(tmp)
             fixture = prepare_fixture(task, workdir)
+            py = make_env(task, workdir, fixture)
             install_skill(entry, fixture)
             agent = run_agent(task, fixture, model, permission_mode)
-            result = grade(task, fixture) if not agent["timed_out"] else \
+            result = grade(task, fixture, py) if not agent["timed_out"] else \
                 {"solved": False, "returncode": None, "output_tail": "agent timed out"}
         record = {
             "week": week, "model": model,

@@ -1,14 +1,26 @@
 # Task suite
 
-20 fixed tasks. Real issues from real OSS repos — not toy katas.
+Real issues from real OSS repos — not toy katas. Every task is mined from a
+merged fix (see [SOURCING.md](SOURCING.md)) and re-verified after assembly:
+hidden suite fails at the fixture commit, passes at the real fix.
 
-| Category | Count | What it probes |
-|---|---|---|
-| bugfix | 6 | root-causing, minimal diffs, not breaking neighbors |
-| feature | 5 | reading existing architecture, matching house style |
-| refactor | 4 | behavior preservation under structural change |
-| test-writing | 3 | meaningful coverage, not assertion theater |
-| docs | 2 | accuracy against the actual code |
+**Season 1 opens with 19 bugfix tasks** across 10 repos (tqdm, click, jinja,
+marshmallow, tenacity, tldextract, deepdiff, pypdf, more-itertools, dateutil;
+≤2 per repo). Feature / refactor / test-writing / docs categories are being
+sourced and will grow the suite — skills are only measured on categories they
+claim, so the leaderboard stays fair as the suite expands.
+
+| Category | Now | Target | What it probes |
+|---|---|---|---|
+| bugfix | 19 | ~20 | root-causing, minimal diffs, not breaking neighbors |
+| feature | 0 | 5 | reading existing architecture, matching house style |
+| refactor | 0 | 4 | behavior preservation under structural change |
+| test-writing | 0 | 3 | meaningful coverage, not assertion theater |
+| docs | 0 | 2 | accuracy against the actual code |
+
+Two tasks (`bugfix-18`, `bugfix-19`) come from pre-2022 fixes with high
+training-data contamination risk; they are flagged and reported separately
+on the leaderboard.
 
 ## Spec format
 

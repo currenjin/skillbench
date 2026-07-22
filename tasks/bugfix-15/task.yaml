@@ -1,0 +1,18 @@
+id: bugfix-15
+category: bugfix
+fixture: py-pdf/pypdf
+commit: da867f4961e4ac5ac9d751cba3131c5a1a8777f3
+prompt: 'When pairing hyperlink annotations between two copies of the same page, the presence
+  of non-link annotation entries (or link annotations that carry no destination, like external
+  URI actions) shifts the positional pairing, so valid internal links get paired against the
+  wrong entry or dropped entirely. Extraction should return one correct pair per real link
+  despite such offsets.
+
+
+  Find the root cause and fix it. Do not modify any existing tests.'
+timeout_minutes: 20
+install: editable
+grading:
+  type: private
+  path: tasks/bugfix-15
+  command: python3 -m pytest grading_tests -q

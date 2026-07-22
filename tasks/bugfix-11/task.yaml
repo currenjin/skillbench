@@ -1,0 +1,18 @@
+id: bugfix-11
+category: bugfix
+fixture: john-kurkowski/tldextract
+commit: 4b358ce274cfd2e3b7fb67933433f5a412e7939b
+prompt: 'Constructing an extractor with include_psl_private_domains=True has no effect: extracting
+  e.g. "foo.uk.com" still returns subdomain="foo", domain="uk", suffix="com" instead of treating
+  the private suffix "uk.com" as the suffix (subdomain="", domain="foo"). The flag only works
+  when passed per-call to the extraction call itself, not when set on the instance at construction
+  time.
+
+
+  Find the root cause and fix it. Do not modify any existing tests.'
+timeout_minutes: 20
+install: editable
+grading:
+  type: private
+  path: tasks/bugfix-11
+  command: python3 -m pytest grading_tests -q
