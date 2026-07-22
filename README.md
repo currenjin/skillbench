@@ -11,7 +11,7 @@
   <img src="https://img.shields.io/github/license/currenjin/skillbench" alt="License">
 </p>
 
-English · 한국어 · 日本語 · 简体中文 · Español · Português <sub>(translations ship with the first leaderboard)</sub>
+English · [한국어](translations/README.ko.md) · [日本語](translations/README.ja.md) · [简体中文](translations/README.zh-CN.md) · [Español](translations/README.es.md) · [Português](translations/README.pt-BR.md)
 
 </div>
 
