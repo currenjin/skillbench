@@ -148,11 +148,22 @@ def run_agent(task, fixture, model, permission_mode):
     }
 
 
+FIXTURES_REPO = "currenjin/skillbench-fixtures"
+
+
 def grade(task, fixture):
     g = task["grading"]
-    if g["type"] != "local":
-        raise NotImplementedError("private grading fixtures land with the season tasks")
-    shutil.copytree(task["_dir"] / g["path"], fixture / "grading_tests")
+    if g["type"] == "local":
+        src = task["_dir"] / g["path"]
+    elif g["type"] == "private":
+        # hidden suites live in the private fixtures repo (maintainer creds);
+        # refresh the cache so weekly suite updates are picked up
+        repo_dir = clone_cached(g.get("repo", FIXTURES_REPO))
+        subprocess.run(["git", "pull", "--quiet"], cwd=repo_dir, check=False)
+        src = repo_dir / g["path"]
+    else:
+        raise ValueError(f"unknown grading type: {g['type']!r}")
+    shutil.copytree(src, fixture / "grading_tests")
     cmd = g["command"].split()
     if cmd[0] in ("python", "python3"):
         cmd[0] = sys.executable  # grade with the harness venv, not system python
