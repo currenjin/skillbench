@@ -1,0 +1,16 @@
+# Pipeline smoke test — NOT a season task, never appears on the leaderboard.
+# The fixture and grading suite are both public because this task only
+# exists to validate the harness end-to-end.
+id: smoke-01
+category: bugfix
+fixture: local
+fixture_path: fixture
+prompt: |
+  Users report that combined durations parse incorrectly:
+  parse_duration("1h30m") returns 60 instead of 90.
+  Find the cause and fix it. Do not modify anything under tests/.
+timeout_minutes: 10
+grading:
+  type: local
+  path: grading
+  command: python3 -m pytest grading_tests -q

@@ -42,6 +42,8 @@ Every number on the leaderboard links to its raw JSONL in `runs/`. If your re-ru
 ## Status
 
 - [x] Harness design (this document)
-- [ ] `run.py` — runner implementation (in progress)
-- [ ] Task fixture repos pinned
+- [x] `run.py` — runner implementation
+- [x] `aggregate.py` — leaderboard generator
+- [x] End-to-end smoke run (`tasks/smoke-01`, log in `runs/dev/`)
+- [ ] Season task selection (20 tasks, pinned fixtures)
 - [ ] First full bench: inaugural cohort, August 2026

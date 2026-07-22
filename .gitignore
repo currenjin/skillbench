@@ -2,3 +2,5 @@ __pycache__/
 .env
 *.log
 .DS_Store
+.venv/
+harness/.cache/
