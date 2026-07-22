@@ -1,0 +1,43 @@
+# SkillBench registry
+# ─────────────────────
+# One entry via PR = your skill enters next Monday's bench.
+#
+# Fields:
+#   repo:        GitHub repo that ships the skill / preset
+#   skill:       skill name inside the repo (omit for whole-repo CLAUDE.md presets)
+#   kind:        skill (default) | claude-md | setup
+#   categories:  task categories the skill claims to help with
+#                (bugfix | feature | refactor | test-writing | docs | all)
+#
+# Rules:
+#   - The skill must be publicly installable.
+#   - We bench what you ship, not what you describe.
+#   - Entries are benched in the next weekly run after merge.
+
+# ── Inaugural cohort (2026-W32) ──────────────────────────────
+
+- repo: obra/superpowers
+  skill: tdd
+  kind: skill
+  categories: [bugfix, feature, refactor, test-writing]
+
+- repo: anthropics/skills
+  skill: code-review
+  kind: skill
+  categories: [bugfix, refactor]
+
+- repo: JuliusBrussee/caveman
+  kind: skill
+  categories: [all]
+
+- repo: nextlevelbuilder/ui-ux-pro-max-skill
+  kind: skill
+  categories: [feature]
+
+- repo: multica-ai/andrej-karpathy-skills
+  kind: claude-md
+  categories: [all]
+
+- repo: github/spec-kit
+  kind: setup
+  categories: [feature]
