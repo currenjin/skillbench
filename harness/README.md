@@ -39,6 +39,18 @@ python run.py --skill obra/superpowers:tdd --task tasks/bugfix-01 --runs 1
 
 Every number on the leaderboard links to its raw JSONL in `runs/`. If your re-run disagrees, open an issue titled `dispute: <skill> / <task>` — disputes get re-run publicly.
 
+## Cost policy
+
+SkillBench runs on **zero cash**: bench runs go through the maintainer's
+Claude subscription (headless `claude` CLI), never a metered API key.
+Consequences, embraced openly:
+
+- Weekly benches run as a **trickle** (batches spread across off-hours),
+  not one burst — the Monday report aggregates the week's runs.
+- Scale comes from scope discipline, not spend: 6 skills × 20 tasks × 3 runs
+  is sized to fit a subscription week.
+- Disputes are re-run on the maintainer's quota, one at a time, publicly.
+
 ## Status
 
 - [x] Harness design (this document)

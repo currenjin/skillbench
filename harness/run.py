@@ -108,12 +108,15 @@ def install_skill(entry, fixture):
         shutil.copy(src / "CLAUDE.md", fixture / "CLAUDE.md")
         return
     name = entry.get("skill")
-    # locate the skill directory: skills/<name>, <name>/, or repo root with SKILL.md
-    candidates = [src / "skills" / name if name else None,
-                  src / name if name else None,
-                  src if (src / "SKILL.md").exists() else None]
-    skill_dir = next((c for c in candidates
-                      if c and c.is_dir() and (c / "SKILL.md").exists()), None)
+    # locate the skill dir — layouts verified across the ecosystem:
+    #   skills/<name>/          (superpowers, anthropics/skills, caveman)
+    #   skills/<bucket>/<name>/ (mattpocock/skills)
+    #   .claude/skills/<name>/  (ui-ux-pro-max)
+    #   <name>/ or repo root with SKILL.md
+    patterns = [f"skills/{name}/SKILL.md", f"skills/*/{name}/SKILL.md",
+                f".claude/skills/{name}/SKILL.md", f"{name}/SKILL.md", "SKILL.md"] \
+        if name else ["SKILL.md"]
+    skill_dir = next((m.parent for pat in patterns for m in sorted(src.glob(pat))), None)
     if skill_dir is None:
         raise RuntimeError(f"cannot locate SKILL.md for {entry['repo']}:{name}")
     dest = fixture / ".claude" / "skills" / (name or Path(entry["repo"]).name)

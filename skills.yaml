@@ -5,39 +5,51 @@
 # Fields:
 #   repo:        GitHub repo that ships the skill / preset
 #   skill:       skill name inside the repo (omit for whole-repo CLAUDE.md presets)
-#   kind:        skill (default) | claude-md | setup
+#   kind:        skill (default) | claude-md
 #   categories:  task categories the skill claims to help with
 #                (bugfix | feature | refactor | test-writing | docs | all)
+#                A skill is only measured on tasks it claims — no gotcha scoring.
 #
 # Rules:
-#   - The skill must be publicly installable.
+#   - The skill must be publicly installable (SKILL.md discoverable in the repo).
 #   - We bench what you ship, not what you describe.
 #   - Entries are benched in the next weekly run after merge.
 
-# ── Inaugural cohort (2026-W32) ──────────────────────────────
+# ── Inaugural cohort (2026-W32) — install paths verified ─────────────
 
 - repo: obra/superpowers
-  skill: tdd
+  skill: test-driven-development
   kind: skill
   categories: [bugfix, feature, refactor, test-writing]
 
-- repo: anthropics/skills
-  skill: code-review
+- repo: obra/superpowers
+  skill: systematic-debugging
   kind: skill
-  categories: [bugfix, refactor]
+  categories: [bugfix]
 
 - repo: JuliusBrussee/caveman
+  skill: caveman
   kind: skill
   categories: [all]
-
-- repo: nextlevelbuilder/ui-ux-pro-max-skill
-  kind: skill
-  categories: [feature]
 
 - repo: multica-ai/andrej-karpathy-skills
   kind: claude-md
   categories: [all]
 
-- repo: github/spec-kit
-  kind: setup
-  categories: [feature]
+- repo: mattpocock/skills
+  skill: codebase-design
+  kind: skill
+  categories: [feature, refactor]
+
+- repo: mattpocock/skills
+  skill: triage
+  kind: skill
+  categories: [bugfix]
+
+# ── Waiting for matching task categories ─────────────────────────────
+# These are popular but claim domains season 1 tasks don't cover yet.
+# They enter as soon as the task suite grows the matching category:
+#
+#   nextlevelbuilder/ui-ux-pro-max-skill : ui-ux-pro-max   (needs: feature-ui)
+#   anthropics/skills : frontend-design, webapp-testing    (needs: feature-ui)
+#   github/spec-kit                                        (needs: greenfield; kind=setup unsupported)
