@@ -201,10 +201,12 @@ def grade(task, fixture, py=None):
             "output_tail": (proc.stdout + proc.stderr)[-2000:]}
 
 
-def bench(entry, task, runs, week, model, permission_mode):
+def bench(entry, task, runs, week, model, permission_mode, resume=False):
     out_dir = ROOT / "runs" / week / slug(entry)
     out_dir.mkdir(parents=True, exist_ok=True)
     for n in range(1, runs + 1):
+        if resume and (out_dir / f"{task['id']}-r{n}.jsonl").exists():
+            continue
         with tempfile.TemporaryDirectory(prefix="skillbench-") as tmp:
             workdir = Path(tmp)
             fixture = prepare_fixture(task, workdir)
@@ -240,6 +242,8 @@ def main():
     p.add_argument("--model", default=DEFAULT_MODEL)
     p.add_argument("--permission-mode", default="acceptEdits",
                    help="claude --permission-mode value (default: acceptEdits)")
+    p.add_argument("--resume", action="store_true",
+                   help="skip (skill, task, run) combos that already have a record")
     args = p.parse_args()
 
     entries = ([BASELINE] + load_skills()) if args.all else \
@@ -251,7 +255,7 @@ def main():
     for entry in entries:
         for task_id in task_ids:
             bench(entry, load_task(task_id), args.runs, args.week, args.model,
-                  args.permission_mode)
+                  args.permission_mode, resume=args.resume)
 
 
 if __name__ == "__main__":
